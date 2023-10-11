@@ -1,5 +1,6 @@
 using DotnetAuthAnother.Api.Models.Dtos;
 using DotnetAuthAnother.Api.Repositories.TeamsRepositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetAuthAnother.Api.Controllers;
@@ -35,5 +36,18 @@ public class TeamsController : ControllerBase
         }
 
         return await Task.FromResult(Ok(team));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateNewTeam(CreateTeamsDataDto teamModel)
+    {
+        var isSuccessful = await _teamsCrudService.CreateTeam(teamModel);
+
+        if (!isSuccessful)
+        {
+            return await Task.FromResult(BadRequest("Failed to create the team"));
+        }
+
+        return await Task.FromResult(CreatedAtRoute("GetTeamById", new { id = teamModel.Id }, teamModel));
     }
 }
