@@ -19,7 +19,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(jwt =>
 {
-    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig")!.GetSection("Secret").Value);
+    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig").GetSection("Secret").Value);
 
     jwt.SaveToken = true;
 
