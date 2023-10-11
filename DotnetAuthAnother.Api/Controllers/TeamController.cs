@@ -1,5 +1,6 @@
 using DotnetAuthAnother.Api.Models.Dtos;
 using DotnetAuthAnother.Api.Repositories.TeamsRepositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetAuthAnother.Api.Controllers;
@@ -68,5 +69,26 @@ public class TeamsController : ControllerBase
         }
 
         return await Task.FromResult(Accepted("Item Updated Successfully"));
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteOneTeam(int id)
+    {
+        var team = await _teamsCrudService.GetTeamById(id);
+
+        if (team is null)
+        {
+            return await Task.FromResult(NotFound("The team with id " + id + "was not found"));
+        }
+
+        var isSuccessful = await _teamsCrudService.DeleteTeam(id);
+
+        if (!isSuccessful)
+        {
+            return await Task.FromResult(BadRequest("Failed to delete the team"));
+        }
+
+        return await Task.FromResult(NoContent());
     }
 }
