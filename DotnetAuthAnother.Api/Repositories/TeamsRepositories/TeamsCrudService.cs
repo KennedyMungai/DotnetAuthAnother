@@ -23,6 +23,7 @@ public class TeamsCrudService : ITeamsCrudService
         try
         {
             await _context.TeamModels.AddAsync(_mapper.Map<TeamModel>(team));
+            await _context.SaveChangesAsync();
             return true;
         }
         catch (Exception ex)
