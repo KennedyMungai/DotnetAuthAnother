@@ -1,6 +1,7 @@
 using System.Text;
 using DotnetAuthAnother.Api.Data;
 using DotnetAuthAnother.Api.Models.Configurations;
+using DotnetAuthAnother.Api.Repositories.TeamsRepositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<ITeamsCrudService, TeamsCrudService>();
 builder.Services.AddDbContext<TeamsDbContext>(options =>
 {
     options.UseMySql(
