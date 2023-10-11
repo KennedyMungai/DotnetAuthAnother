@@ -1,11 +1,12 @@
 using Bogus;
 using DotnetAuthAnother.Api.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetAuthAnother.Api.Data;
 
 
-public class TeamsDbContext : DbContext
+public class TeamsDbContext : IdentityDbContext
 {
     public TeamsDbContext(DbContextOptions<TeamsDbContext> options) : base(options)
     {
