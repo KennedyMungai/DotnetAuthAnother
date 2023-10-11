@@ -1,6 +1,5 @@
 using DotnetAuthAnother.Api.Models.Dtos;
 using DotnetAuthAnother.Api.Repositories.TeamsRepositories;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetAuthAnother.Api.Controllers;
@@ -26,6 +25,8 @@ public class TeamsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ReadTeamsDataDto>> GetTeamById(int id)
     {
         var team = _teamsCrudService.GetTeamById(id);
@@ -39,6 +40,8 @@ public class TeamsController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateNewTeam(CreateTeamsDataDto teamModel)
     {
         var isSuccessful = await _teamsCrudService.CreateTeam(teamModel);
@@ -52,6 +55,9 @@ public class TeamsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateOneTeam(int id, UpdateTeamsDataDto teamModel)
     {
         var team = await _teamsCrudService.GetTeamById(id);
@@ -73,6 +79,8 @@ public class TeamsController : ControllerBase
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteOneTeam(int id)
     {
         var team = await _teamsCrudService.GetTeamById(id);
