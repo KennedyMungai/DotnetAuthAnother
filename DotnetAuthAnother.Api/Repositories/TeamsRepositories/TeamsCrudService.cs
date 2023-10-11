@@ -39,7 +39,7 @@ public class TeamsCrudService : ITeamsCrudService
         {
             var team = await _context.TeamModels.FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.TeamModels.Remove(team);
+            _context.TeamModels.Remove(team!);
 
             await _context.SaveChangesAsync();
 
@@ -73,9 +73,9 @@ public class TeamsCrudService : ITeamsCrudService
         {
             var team = await _context.TeamModels.FirstOrDefaultAsync(x => x.Id == id);
 
-            team.Name = teamData.Name;
-            team.Country = teamData.Country;
-            team.TeamPrinciple = teamData.TeamPrinciple;
+            team!.Name = teamData.Name;
+            team!.Country = teamData.Country;
+            team!.TeamPrinciple = teamData.TeamPrinciple;
 
             await _context.SaveChangesAsync();
 
